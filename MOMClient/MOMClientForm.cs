@@ -20,6 +20,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace MOM
 {
+    // System.Drawing and the XNA Framework both define Color types.
+    // To avoid conflicts, we define shortcut names for them both.
+    using GdiColor = System.Drawing.Color;
+    using XnaColor = Microsoft.Xna.Framework.Graphics.Color;
+
+
     public partial class MOMClientForm : Form
     {
         // Debug vars
@@ -56,7 +62,7 @@ namespace MOM
             //SetupDataGridView();  // mmb - add this back in
 
             // Welcome the player
-            UpdateStatusStrip("Welcome to Magic the Gathering Online!");
+            UpdateStatusStrip("Welcome to Master of Magic Online!");
 
             // Disable all the extra tabs until someone is logged in
             EnableTabPages(false);
@@ -878,15 +884,27 @@ namespace MOM
             EnableTabPages(true);
 
             // move tab focus to  the game tab
-            tabControl1.SelectTab("Game");
+            tabControl1.SelectTab(tabPageGame);
 
             // start the game!
-            String DeckName = comboBoxDecks2.SelectedItem.ToString();
+            //String DeckName = comboBoxDecks2.SelectedItem.ToString(); //mmb - might need this
 
             CurrentGame = new Game(this);
-            CurrentGame.StartSolitareGame();
+            //CurrentGame.StartSolitareGame(); //mmb - need this?
+        }
 
-            Update();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gameControl1_Click(object sender, EventArgs e)
+        {
+            // capture the click
+            MouseEventArgs mouse = (MouseEventArgs)e;
+
+            // pass the click to the game control object
+            gameControl1.UpdateGame(mouse);
         }
     }
 }

@@ -1,0 +1,2 @@
+Content\Arial.xnb
+Content\screen_maintitle.xnb

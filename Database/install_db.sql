@@ -12,7 +12,6 @@ CREATE TABLE [dbo].[players](
 	[password] [nchar](10) NOT NULL,
 	[admin] [smallint] NOT NULL CONSTRAINT [DF_players_admin]  DEFAULT ((0)),	
 	[online] [smallint] NOT NULL CONSTRAINT [DF_players_online]  DEFAULT ((0)),
-	[collection] [int] NULL,
  CONSTRAINT [PK_players] PRIMARY KEY CLUSTERED 
 (
 	[id] ASC
