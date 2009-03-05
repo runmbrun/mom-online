@@ -40,7 +40,7 @@
     <OutputPath>..\bin\x86\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Arial.spritefont">
+    <Compile Include="fonts\Arial.spritefont">
       <Name>Arial</Name>
       <Importer>FontDescriptionImporter</Importer>
       <Processor>FontDescriptionProcessor</Processor>
@@ -80,8 +80,73 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="screen_maintitle.png">
-      <Name>screen_maintitle</Name>
+    <Compile Include="bg\bg_options.bmp">
+      <Name>bg_options</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bg\bg_main.bmp">
+      <Name>bg_main</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="animations\anim.bmp">
+      <Name>anim</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="buttons\blank.bmp">
+      <Name>blank</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="buttons\wizard.bmp">
+      <Name>wizard</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="fonts\EnglishGothic.spritefont">
+      <Name>EnglishGothic</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="bg\bg_books.bmp">
+      <Name>bg_books</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bg\bg_colour.bmp">
+      <Name>bg_colour</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bg\bg_menus.bmp">
+      <Name>bg_menus</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bg\bg_name.bmp">
+      <Name>bg_name</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bg\bg_race.bmp">
+      <Name>bg_race</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="bg\bg_wizard.bmp">
+      <Name>bg_wizard</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
@@ -95,7 +160,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>mkdir $(SolutionDir)\MOMClient\bin\$(ConfigurationName)\$(TargetName)
-copy $(TargetDir)$(TargetName)\*.* $(SolutionDir)\MOMClient\bin\$(ConfigurationName)\$(TargetName)</PostBuildEvent>
+    <PostBuildEvent>xcopy /E /Y $(TargetDir)* $(SolutionDir)MOMClient\bin\$(ConfigurationName)</PostBuildEvent>
   </PropertyGroup>
 </Project>

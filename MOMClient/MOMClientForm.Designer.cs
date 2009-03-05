@@ -134,7 +134,10 @@
             this.gameControl1.Size = new System.Drawing.Size(640, 400);
             this.gameControl1.TabIndex = 1;
             this.gameControl1.Text = "gameControl1";
+            this.gameControl1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.gameControl1_MouseMove);
             this.gameControl1.Click += new System.EventHandler(this.gameControl1_Click);
+            this.gameControl1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gameControl1_MouseClick);
+            this.gameControl1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.gameControl1_KeyPress);
             // 
             // tabPageLobby
             // 
