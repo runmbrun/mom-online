@@ -1,2 +1,13 @@
-Content\Arial.xnb
-Content\screen_maintitle.xnb
+Content\fonts\Arial.xnb
+Content\fonts\EnglishGothic.xnb
+Content\bg\bg_options.xnb
+Content\bg\bg_main.xnb
+Content\animations\anim.xnb
+Content\buttons\blank.xnb
+Content\buttons\wizard.xnb
+Content\bg\bg_books.xnb
+Content\bg\bg_colour.xnb
+Content\bg\bg_menus.xnb
+Content\bg\bg_name.xnb
+Content\bg\bg_race.xnb
+Content\bg\bg_wizard.xnb

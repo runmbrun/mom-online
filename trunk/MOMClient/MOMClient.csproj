@@ -49,14 +49,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameControl.cs">
+    <Compile Include="Game\GameControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Game.cs" />
-    <Compile Include="GraphicsDeviceControl.cs">
+    <Compile Include="Game\GameOptionsScreen.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="GraphicsDeviceService.cs" />
+    <Compile Include="Game\GraphicsDeviceControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Game\GraphicsDeviceService.cs" />
     <Compile Include="MOMClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,8 +90,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ServiceContainer.cs" />
-    <Compile Include="SpriteFontControl.cs">
+    <Compile Include="Game\ServiceContainer.cs" />
+    <Compile Include="Game\SpriteFontControl.cs">
       <SubType>Component</SubType>
     </Compile>
   </ItemGroup>

@@ -1,12 +1,38 @@
+===================
 Here is a TODO list:
+===================
+===================
 (in no order)
 
 
 
 Proof of Concept:
-
+================
 Done - Need to test having an XNA control in a windows form. 
 Done - Need to be able to use Content.  spritefont, pictures, etc in the xna control.
-- Have a game update that allows up to date drawing
+Done - Have a game update that allows up to date drawing
+Done - Need to be able to refresh the screen all the time
+- Need to create a game object that will store all the game data and can be saved in the database.  
+	So turns can be passed back and forth amongst the players.
+
+
+
+Client - Windows Form
+=====================
+- 
+
+
+
+Client - XNA Game
+=================
+- Convert Content data from bmp to png.  Could save a lot of space... 188k to 27k.
+- 
+
+
+
+Server
+======
+- 
+
 
 

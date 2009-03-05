@@ -69,7 +69,7 @@ namespace MOM
         /// <summary>
         /// Draws the control, using SpriteBatch and SpriteFont.
         /// </summary>
-        protected override void Draw()
+        public override void Draw()
         {
             const string message = "Hello, World!\n" +
                                    "\n" +

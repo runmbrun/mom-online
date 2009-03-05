@@ -47,7 +47,6 @@ namespace MOM
         private Int32 WaitingForData = 1;        
 
         // Game
-        Game CurrentGame;
 
 
 
@@ -65,7 +64,7 @@ namespace MOM
             UpdateStatusStrip("Welcome to Master of Magic Online!");
 
             // Disable all the extra tabs until someone is logged in
-            EnableTabPages(false);
+            //EnableTabPages(false);//mmb - temp remove this for debugging
             
             WaitingData = new byte[PacketSize];
         }
@@ -305,7 +304,7 @@ namespace MOM
                 EnableUserTextBox(true);
                 EnablePasswordTextBox(true);
 
-                EnableTabPages(false);
+                //EnableTabPages(false);//mmb - temp remove this for debugging
 
                 Connected = false;
                 Receiving = false;
@@ -408,7 +407,7 @@ namespace MOM
                                 LogDebug("Logout: [" + packet.Data.ToString() + "]");
                                 UpdateStatusStrip("Successfully Logged off the MOM Server");
 
-                                EnableTabPages(false);
+                                //EnableTabPages(false);//mmb - temp remove this for debugging
                                 Receiving = true;
 
                                 break;
@@ -880,17 +879,19 @@ namespace MOM
         {
             // enable the game tab
             Gaming = true;
-            EnableTabPages(false);
-            EnableTabPages(true);
+            //EnableTabPages(false); //mmb - temp remove this for debugging
+            //EnableTabPages(true); //mmb - temp remove this for debugging
 
             // move tab focus to  the game tab
-            tabControl1.SelectTab(tabPageGame);
+            tabControl1.SelectTab(tabPageGame); //mmb - temp remove this for debugging
 
             // start the game!
             //String DeckName = comboBoxDecks2.SelectedItem.ToString(); //mmb - might need this
 
-            CurrentGame = new Game(this);
+            //CurrentGame = new Game(this);            
             //CurrentGame.StartSolitareGame(); //mmb - need this?
+
+            gameControl1.StartSolitareGame();
         }
 
         /// <summary>
@@ -905,6 +906,30 @@ namespace MOM
 
             // pass the click to the game control object
             gameControl1.UpdateGame(mouse);
+        }
+
+        private void gameControl1_MouseMove(object sender, MouseEventArgs e)
+        {
+            // capture the click
+            MouseEventArgs mouse = (MouseEventArgs)e;
+
+            // pass the click to the game control object
+            //gameControl1.UpdateGame(mouse);  //mmb - when to do this?
+            //gameControl1.Draw();
+            //Update();
+
+            //tabControl1.Update();
+            //gameControl1.Update();
+        }
+
+        private void gameControl1_MouseClick(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void gameControl1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+
         }
     }
 }

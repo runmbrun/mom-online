@@ -295,7 +295,7 @@ namespace MOM
         /// <summary>
         /// Derived classes override this to draw themselves using the GraphicsDevice.
         /// </summary>
-        protected abstract void Draw();
+        public abstract void Draw();
 
 
         #endregion
