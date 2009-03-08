@@ -297,6 +297,12 @@ namespace MOM
         /// </summary>
         public abstract void Draw();
 
+        /// <summary>
+        /// Derived classes override this to Update the Screen Data
+        /// </summary>
+        /// <param name="Mouse"></param>
+        public abstract void UpdateGame(MouseEventArgs Mouse);
+
 
         #endregion
     }

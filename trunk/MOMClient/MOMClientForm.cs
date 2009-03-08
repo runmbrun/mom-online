@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+//using Microsoft.Xna.Framework.Input; //mmb - where to put this?
 #endregion
 
 
@@ -902,10 +903,10 @@ namespace MOM
         private void gameControl1_Click(object sender, EventArgs e)
         {
             // capture the click
-            MouseEventArgs mouse = (MouseEventArgs)e;
+            //MouseEventArgs mouse = (MouseEventArgs)e;
 
             // pass the click to the game control object
-            gameControl1.UpdateGame(mouse);
+            //gameControl1.UpdateGame(mouse);
         }
 
         private void gameControl1_MouseMove(object sender, MouseEventArgs e)
@@ -914,7 +915,7 @@ namespace MOM
             MouseEventArgs mouse = (MouseEventArgs)e;
 
             // pass the click to the game control object
-            //gameControl1.UpdateGame(mouse);  //mmb - when to do this?
+            gameControl1.UpdateGame(mouse);  //mmb - when to do this?
             //gameControl1.Draw();
             //Update();
 

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Drawing;
-//using MOM;
 
 
 
 namespace MOM
 {
-    class MOMGame
+    public class MOMGame
     {
         public enum _gametype
         {
@@ -46,7 +45,7 @@ namespace MOM
         /// </summary>
         public void StartSinglePlayerGame()
         {
-            GameState = _gamestate.Game;
+            GameState = _gamestate.Starting;
             GameType = _gametype.Single;
             
         }

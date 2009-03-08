@@ -52,14 +52,19 @@
     <Compile Include="Game\GameControl.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Game.cs" />
-    <Compile Include="Game\GameOptionsScreen.cs">
+    <Compile Include="Game\ScreenSelectOptions.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Game\GameScreen.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Game\GraphicsDeviceControl.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Game\GraphicsDeviceService.cs" />
+    <Compile Include="Game\ScreenSelectWizard.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MOMClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -91,9 +96,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Game\ServiceContainer.cs" />
-    <Compile Include="Game\SpriteFontControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MOMCommon\MOMCommon.csproj">
