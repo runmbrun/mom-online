@@ -6,8 +6,9 @@ Content\animations\anim.xnb
 Content\buttons\blank.xnb
 Content\buttons\wizard.xnb
 Content\bg\bg_books.xnb
-Content\bg\bg_colour.xnb
+Content\bg\bg_banner.xnb
 Content\bg\bg_menus.xnb
 Content\bg\bg_name.xnb
 Content\bg\bg_race.xnb
 Content\bg\bg_wizard.xnb
+Content\cursors\hand.xnb

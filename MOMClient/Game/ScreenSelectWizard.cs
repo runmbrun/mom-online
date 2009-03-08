@@ -11,26 +11,20 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace MOM
 {
-    class GameOptionsScreen : GameControl
+    class ScreenSelectWizard : GameScreen
     {
-        // Graphics
-        ContentManager content;
-        SpriteBatch spriteBatch;
-        SpriteFont font;
-        Texture2D textureOptionsScreen, textureOptionsButton;
-
         // Data
-        Int32 ButtonPressed = 0;
+        //Int32 ButtonPressed = 0;
 
         // Need to be able to pass this info back to the GameControl object
-        public Dictionary<String, String[]> Options;           
-            
+        public Dictionary<String, String[]> Options;
+
 
 
         /// <summary>
         /// Screen Constructor
         /// </summary>
-        public GameOptionsScreen(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
+        public ScreenSelectWizard(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
         {
             spriteBatch = BaseSpriteBatch;
             content = BaseContent;
@@ -47,13 +41,13 @@ namespace MOM
             {
                 font = content.Load<SpriteFont>(@"fonts\EnglishGothic");
 
-                textureOptionsScreen = content.Load<Texture2D>(@"bg\bg_options");
-                textureOptionsButton = content.Load<Texture2D>(@"buttons\wizard");
+                textureScreen = content.Load<Texture2D>(@"bg\bg_wizard");
+                textureButton = content.Load<Texture2D>(@"buttons\wizard");
 
                 // mmb - do we want this in here?
                 // Hook the idle event to constantly redraw our animation.
                 //Application.Idle += delegate { Invalidate(); };
-                                
+
                 FillOutOptions();
             }
             catch (Exception ex)
@@ -95,9 +89,10 @@ namespace MOM
             {
                 // draw background first
                 spriteBatch.Begin(SpriteBlendMode.None);
-                spriteBatch.Draw(textureOptionsScreen, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
+                spriteBatch.Draw(textureScreen, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
                 spriteBatch.End();
 
+                /*
                 // now draw the buttons
                 Int32 B1x = 0, B2x = 0, B3x = 0, B4x = 0, B5x = 0, B6x = 0;
 
@@ -105,7 +100,7 @@ namespace MOM
                 {
                     switch (ButtonPressed)
                     {
-                        case 1: 
+                        case 1:
                             B1x = 15;
                             break;
                         case 2:
@@ -125,20 +120,20 @@ namespace MOM
                             break;
                     }
                 }
-                
+
                 // Options Buttons:
                 // Button Size = 68 x 30.
                 spriteBatch.Begin(SpriteBlendMode.None);
                 // First Button - Difficulty.  251 x 41
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 84, 124, 30), new Rectangle(0, B1x, 68, 15), Color.White);                
+                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 84, 124, 30), new Rectangle(0, B1x, 68, 15), Color.White);
                 // Second Button - Opponents.  
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 137, 124, 30), new Rectangle(0, B2x, 68, 15), Color.White);                
+                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 137, 124, 30), new Rectangle(0, B2x, 68, 15), Color.White);
                 // Third Button - Land Size
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 191, 124, 30), new Rectangle(0, B3x, 68, 15), Color.White);                
+                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 191, 124, 30), new Rectangle(0, B3x, 68, 15), Color.White);
                 // Fourth Button - Magic
                 spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 246, 124, 30), new Rectangle(0, B4x, 68, 15), Color.White);
                 // Fifth Button - Ok
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(344, 360, 124, 30), new Rectangle(0, B5x, 68, 15), Color.White);                
+                spriteBatch.Draw(textureOptionsButton, new Rectangle(344, 360, 124, 30), new Rectangle(0, B5x, 68, 15), Color.White);
                 // Sixth Button - Cancel
                 spriteBatch.Draw(textureOptionsButton, new Rectangle(506, 360, 124, 30), new Rectangle(0, B6x, 68, 15), Color.White);
                 spriteBatch.End();
@@ -152,6 +147,7 @@ namespace MOM
                 spriteBatch.DrawString(font, "Ok", new Vector2(346, 370), Color.White);
                 spriteBatch.DrawString(font, "Cancel", new Vector2(516, 370), Color.White);
                 spriteBatch.End();
+                 * */
             }
             catch (Exception ex)
             {
@@ -164,10 +160,9 @@ namespace MOM
         /// </summary>
         /// <param name="Mouse"></param>
         /// <returns></returns>
-        public GameScreen Update(MouseEventArgs Mouse)
+        public override void UpdateGame(MouseEventArgs Mouse)
         {
-            GameScreen NewScreen = GameScreen.Options;
-
+            /*
             // check if a button was pressed
             if (Mouse.Button == MouseButtons.Left)
             {
@@ -178,9 +173,9 @@ namespace MOM
                     {
                         // OK
                         ButtonPressed = 5;
-                        NewScreen = GameScreen.ChooseWizard;
+                        CurrentScreen = CurrentGameScreen.SelectWizard;
                     }
-                }                
+                }
                 else if (Mouse.X > 505 && Mouse.X < 629)
                 {
                     // check the y position now
@@ -204,7 +199,7 @@ namespace MOM
                     {
                         // Cancel
                         ButtonPressed = 6;
-                        NewScreen = GameScreen.None;
+                        CurrentScreen = CurrentGameScreen.None;
                     }
                     else
                     {
@@ -215,12 +210,11 @@ namespace MOM
                 {
                     ButtonPressed = 0;
                 }
-            }            
+            }
+            * */
 
             // now trigger a draw call to update the screen
-            Draw();            
-                        
-            return NewScreen; 
+            Draw();             
         }
     }
 }

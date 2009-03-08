@@ -13,6 +13,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -32,36 +33,48 @@ namespace MOM
     class GameControl : GraphicsDeviceControl
     {
         // Graphics
-        ContentManager content;
-        SpriteBatch spriteBatch;
-        SpriteFont font;
-        Texture2D textureMain, textureMainAnimation;
-        GameOptionsScreen screenOptions;
+        public ContentManager content;
+        public SpriteBatch spriteBatch;
+        public SpriteFont font;
+        public Texture2D textureScreen, textureAnimation, textureCursor, textureButton;
+        ScreenSelectOptions screenSelectOptions;
+        ScreenSelectWizard screenSelectWizard;
+        
 
         // Screen Info
         public Int32 ScreenX = 640;
         public Int32 ScreenY = 400;
-
+        
         // Game State Info
-        public enum GameScreen
+        public enum CurrentGameScreen
         {
-            Options,
-            ChooseWizard,
+            SelectOptions,
+            SelectWizard,
+            SelectCustomPicture,
+            SelectWizardName,
+            SelectCustomBooks,
+            SelectCustomSpells,
+            SelectRace,
+            SelectBanner,      
+            Buildingworlds,
             Game,
             None
         }
 
-        // Game State
-        private static GameScreen gameScreen = GameScreen.None;
+        // Keep track of the current Screen for the game
+        public static CurrentGameScreen CurrentScreen = CurrentGameScreen.None;
 
         // Game Data
         // mmb - todo
-        // MOMGame game = new MOMGame();
-        
+         public MOMGame game = new MOMGame();
+         public MouseState CurrentMouseState;
 
         // Animations
         Stopwatch GameTimer;
         Int32 GameTick = 0;
+        float LastTime = 0;
+        public Int32 MouseX = 0;
+        public Int32 MouseY = 0;
 
 
         /// <summary>
@@ -72,16 +85,25 @@ namespace MOM
         {
             try
             {
+                // We aren't at a screen yet...
+                CurrentScreen = CurrentGameScreen.None;
+                
+                // Init Graphics stuff
                 content = new ContentManager(Services, "Content");
-
                 spriteBatch = new SpriteBatch(GraphicsDevice);
 
+                // load the font data files
                 font = content.Load<SpriteFont>(@"fonts\Arial");
 
-                textureMain = content.Load<Texture2D>(@"bg\bg_main");
-                textureMainAnimation = content.Load<Texture2D>(@"animations\anim");
+                // load the screen data files
+                textureScreen = content.Load<Texture2D>(@"bg\bg_main");
+                textureAnimation = content.Load<Texture2D>(@"animations\anim");
+                textureCursor = content.Load<Texture2D>(@"cursors\hand");
 
-                screenOptions = new GameOptionsScreen(content, spriteBatch);
+                // load the screen classes
+                // mmb - now or when needed?
+                screenSelectOptions = new ScreenSelectOptions(content, spriteBatch);
+                screenSelectWizard = new ScreenSelectWizard(content, spriteBatch);
 
                 // Start the animation timer.
                 GameTimer = Stopwatch.StartNew();
@@ -116,17 +138,22 @@ namespace MOM
             // Check how much time has passed for the animations
             float time = (float)GameTimer.Elapsed.TotalSeconds;
 
+            // mmb - still need to get the mouse position
+            this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+            this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
+            this.spriteBatch.End();
+
             try
             {
                 // clear the screen
                 GraphicsDevice.Clear(Color.Black);
 
 
-                if (gameScreen == GameScreen.Options)
+                if (CurrentScreen == CurrentGameScreen.SelectOptions)
                 {
-                    screenOptions.Draw();
+                    screenSelectOptions.Draw();
                 }
-                else if (gameScreen == GameScreen.ChooseWizard)
+                else if (CurrentScreen == CurrentGameScreen.SelectWizard)
                 {
                     // mmb - todo
                     //screenChooseWizard.Draw();
@@ -137,13 +164,26 @@ namespace MOM
                     spriteBatch.Begin(SpriteBlendMode.None);
 
                     // main background
-                    spriteBatch.Draw(textureMain, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
+                    spriteBatch.Draw(textureScreen, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
                     
-                    // animation.  320 x 820.  20 frames.  Each frame is 320 x 41.  Everything * 2!
-                    // mmb- this needs to be animated faster!
-                    GameTick = Convert.ToInt32(time % 20.0f);                    
-                    spriteBatch.Draw(textureMainAnimation, new Rectangle(0, 0, 640, 82), new Rectangle(0, (GameTick * 41), 320, 41), Color.White);
+                    // animation.  320 x 820.  20 frames.  Each frame is 320 x 41.  Everything * 2!                    
+                    if (time - LastTime > .1f)
+                    {
+                        GameTick++;
+                        if (GameTick >= 20)
+                        {
+                            GameTick = 0;
+                        }
+
+                        LastTime = time;
+                    }
+                    // mmb - old way... this needs to be animated faster!
+                    //spriteBatch.Draw(textureAnimation, new Rectangle(0, 0, 640, 82), new Rectangle(0, ((Convert.ToInt32(time % 20.0f)) * 41), 320, 41), Color.White);
+                    // mmb - new way!
+                    spriteBatch.Draw(textureAnimation, new Rectangle(0, 0, 640, 82), new Rectangle(0, (GameTick * 41), 320, 41), Color.White);                                        
+                    
                     spriteBatch.End();
+
 
                     // mmb - debugging message
                     const string message = "DEBUGGING!\n";
@@ -162,12 +202,20 @@ namespace MOM
         /// 
         /// </summary>
         /// <param name="Mouse"></param>
-        public void UpdateGame(MouseEventArgs Mouse)
+        public override void UpdateGame(MouseEventArgs MouseArgs)
         {
+            MouseX = MouseArgs.X;
+            MouseY = MouseArgs.Y;
+
+ 
             // update the game data to update the screens
-            if (gameScreen == GameScreen.Options)
+            if (CurrentScreen == CurrentGameScreen.SelectOptions)
             {
-                gameScreen = screenOptions.Update(Mouse);
+                screenSelectOptions.UpdateGame(MouseArgs);
+            }
+            if (CurrentScreen == CurrentGameScreen.SelectOptions)
+            {
+                screenSelectWizard.UpdateGame(MouseArgs);
             }
             else
             {
@@ -180,7 +228,7 @@ namespace MOM
         /// </summary>
         internal void StartSolitareGame()
         {
-            gameScreen = GameScreen.Options;
+            CurrentScreen = CurrentGameScreen.SelectOptions;
         }
     }
 }
