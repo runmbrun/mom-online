@@ -69,7 +69,6 @@ namespace MOM
             Options.Add("Magic", new String[] { "Weak", "Medium", "Strong" });
         }
 
-
         /// <summary>
         /// Disposes the control, unloading the ContentManager.
         /// </summary>
@@ -214,7 +213,7 @@ namespace MOM
             * */
 
             // now trigger a draw call to update the screen
-            Draw();             
+            //Draw();             
         }
     }
 }

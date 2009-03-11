@@ -137,17 +137,18 @@ namespace MOM
         {
             // Check how much time has passed for the animations
             float time = (float)GameTimer.Elapsed.TotalSeconds;
-
-            // mmb - still need to get the mouse position
-            this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-            this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
-            this.spriteBatch.End();
+            
 
             try
             {
                 // clear the screen
                 GraphicsDevice.Clear(Color.Black);
 
+                // show the mouse cursor
+                // mmb - TODO - still need to get the mouse position
+                //this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+                //this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
+                //this.spriteBatch.End();
 
                 if (CurrentScreen == CurrentGameScreen.SelectOptions)
                 {
@@ -155,8 +156,7 @@ namespace MOM
                 }
                 else if (CurrentScreen == CurrentGameScreen.SelectWizard)
                 {
-                    // mmb - todo
-                    //screenChooseWizard.Draw();
+                    screenSelectWizard.Draw();
                 }
                 else
                 {
@@ -190,6 +190,12 @@ namespace MOM
                     spriteBatch.Begin();
                     spriteBatch.DrawString(font, message, new Vector2(23, 23), Color.White);
                     spriteBatch.End();
+
+                    // show the mouse cursor
+                    // mmb - TODO - still need to get the mouse position
+                    this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+                    this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
+                    this.spriteBatch.End();
                 }
             }
             catch (Exception ex)
