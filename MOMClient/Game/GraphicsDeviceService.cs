@@ -1,3 +1,4 @@
+
 #region File Description
 //-----------------------------------------------------------------------------
 // GraphicsDeviceService.cs
@@ -12,6 +13,8 @@ using System;
 using System.Threading;
 using Microsoft.Xna.Framework.Graphics;
 #endregion
+
+
 
 // The IGraphicsDeviceService interface requires a DeviceCreated event, but we
 // always just create the device inside our constructor, so we have no place to
