@@ -39,6 +39,7 @@ namespace MOM
         public Texture2D textureScreen, textureAnimation, textureCursor, textureButton;
         ScreenSelectOptions screenSelectOptions;
         ScreenSelectWizard screenSelectWizard;
+        ScreenSelectWizardName screenSelectWizardName;
         
 
         // Screen Info
@@ -104,6 +105,7 @@ namespace MOM
                 // mmb - now or when needed?
                 screenSelectOptions = new ScreenSelectOptions(content, spriteBatch);
                 screenSelectWizard = new ScreenSelectWizard(content, spriteBatch);
+                screenSelectWizardName = new ScreenSelectWizardName(content, spriteBatch);
 
                 // Start the animation timer.
                 GameTimer = Stopwatch.StartNew();
@@ -144,12 +146,7 @@ namespace MOM
                 // clear the screen
                 GraphicsDevice.Clear(Color.Black);
 
-                // show the mouse cursor
-                // mmb - TODO - still need to get the mouse position
-                //this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-                //this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
-                //this.spriteBatch.End();
-
+                // check to see which screen to draw
                 if (CurrentScreen == CurrentGameScreen.SelectOptions)
                 {
                     screenSelectOptions.Draw();
@@ -157,6 +154,14 @@ namespace MOM
                 else if (CurrentScreen == CurrentGameScreen.SelectWizard)
                 {
                     screenSelectWizard.Draw();
+                }
+                else if (CurrentScreen == CurrentGameScreen.SelectWizard)
+                {
+                    screenSelectWizard.Draw();
+                }
+                else if (CurrentScreen == CurrentGameScreen.SelectWizardName)
+                {
+                    screenSelectWizardName.Draw();
                 }
                 else
                 {
@@ -177,26 +182,21 @@ namespace MOM
 
                         LastTime = time;
                     }
-                    // mmb - old way... this needs to be animated faster!
-                    //spriteBatch.Draw(textureAnimation, new Rectangle(0, 0, 640, 82), new Rectangle(0, ((Convert.ToInt32(time % 20.0f)) * 41), 320, 41), Color.White);
-                    // mmb - new way!
                     spriteBatch.Draw(textureAnimation, new Rectangle(0, 0, 640, 82), new Rectangle(0, (GameTick * 41), 320, 41), Color.White);                                        
                     
                     spriteBatch.End();
-
-
+                    
                     // mmb - debugging message
                     const string message = "DEBUGGING!\n";
                     spriteBatch.Begin();
                     spriteBatch.DrawString(font, message, new Vector2(23, 23), Color.White);
                     spriteBatch.End();
-
-                    // show the mouse cursor
-                    // mmb - TODO - still need to get the mouse position
-                    this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
-                    this.spriteBatch.Draw(textureCursor, new Vector2(MouseX, MouseY), Color.White);
-                    this.spriteBatch.End();
                 }
+
+                // show the mouse cursor                    
+                this.spriteBatch.Begin(SpriteBlendMode.AlphaBlend);
+                this.spriteBatch.Draw(textureCursor, new Rectangle(MouseX, MouseY, 32, 32), Color.White);
+                this.spriteBatch.End();
             }
             catch (Exception ex)
             {
@@ -219,13 +219,13 @@ namespace MOM
             {
                 screenSelectOptions.UpdateGame(MouseArgs);
             }
-            if (CurrentScreen == CurrentGameScreen.SelectOptions)
+            else if (CurrentScreen == CurrentGameScreen.SelectWizard)
             {
                 screenSelectWizard.UpdateGame(MouseArgs);
             }
-            else
+            else if (CurrentScreen == CurrentGameScreen.SelectWizardName)
             {
-                // there is no game state, so we are at the title page!
+                screenSelectWizardName.UpdateGame(MouseArgs);
             }
         }
 

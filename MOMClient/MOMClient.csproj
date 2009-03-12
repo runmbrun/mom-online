@@ -65,6 +65,9 @@
     <Compile Include="Game\ScreenSelectWizard.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Game\ScreenSelectWizardName.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="MOMClientForm.cs">
       <SubType>Form</SubType>
     </Compile>
