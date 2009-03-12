@@ -43,7 +43,7 @@ namespace MOM
         {
             try
             {
-                font = content.Load<SpriteFont>(@"fonts\EnglishGothic");
+                font = content.Load<SpriteFont>(@"fonts\ERBukinist");
 
                 textureScreen = content.Load<Texture2D>(@"bg\bg_options");
                 textureButton = content.Load<Texture2D>(@"buttons\blank");
@@ -163,7 +163,8 @@ namespace MOM
                     }
 
                     // draw the button
-                    spriteBatch.Draw(textureButton, new Rectangle(x, y, 130, 32), new Rectangle(0, z, 65, 16), Color.White); 
+                    spriteBatch.Draw(textureButton, new Rectangle(x, y, 130, 32), new Rectangle(0, z, 65, 16), Color.White);
+                    //DrawTextOnButton(font, Options[Option][SelectedOptions[Option]], new Rectangle(x, y, 130, 32), Color.Black);
                     
                     // reset the button up or down var
                     z = 0;
@@ -171,20 +172,51 @@ namespace MOM
                 }
                 // Ok Button
                 spriteBatch.Draw(textureButton, new Rectangle(342, 360, 130, 32), new Rectangle(0, 0, 65, 16), Color.White);
+                //DrawTextOnButton(font, "Ok", new Rectangle(342, 360, 130, 32), Color.Black);                
                 // Cancel Button
                 spriteBatch.Draw(textureButton, new Rectangle(503, 360, 130, 32), new Rectangle(0, 0, 65, 16), Color.White);
+                //DrawTextOnButton(font, "Cancel", new Rectangle(503, 360, 130, 32), Color.Black);
                 spriteBatch.End();   
                                
 
                 // Options Text:
+                x = 0;
+                y = 0;
+                button = 1;
                 spriteBatch.Begin();
-                spriteBatch.DrawString(font, Options["Difficulty"][SelectedOptions["Difficulty"]], new Vector2(525, 92), Color.White);
-                spriteBatch.DrawString(font, Options["Opponents"][SelectedOptions["Opponents"]], new Vector2(525, 147), Color.White);
-                spriteBatch.DrawString(font, Options["Land Size"][SelectedOptions["Land Size"]], new Vector2(525, 201), Color.White);
-                spriteBatch.DrawString(font, Options["Magic"][SelectedOptions["Magic"]], new Vector2(525, 254), Color.White);
-                spriteBatch.DrawString(font, "Ok", new Vector2(346, 370), Color.White);
-                spriteBatch.DrawString(font, "Cancel", new Vector2(516, 370), Color.White);
+                // mmb - change these to get a better font
+                foreach (String Option in Options.Keys)
+                {
+                    // Draw each Button 251 x 41
+
+                    // calculate x
+                    if (button == 1)
+                    {
+                        // start here at the first button
+                        x = 503;
+                        y = 84;
+                        z = 0;
+                    }                    
+                    else
+                    {
+                        // even button - increment x
+                        y += 54;
+                    }
+
+                    DrawTextOnButton(font, Options[Option][SelectedOptions[Option]], new Rectangle(x, y, 130, 32), Color.Black);
+                    button++;
+                }
+                DrawTextOnButton(font, "Ok", new Rectangle(342, 360, 130, 32), Color.Black);
+                DrawTextOnButton(font, "Cancel", new Rectangle(503, 360, 130, 32), Color.Black);
                 spriteBatch.End();
+                /*
+                DrawTextOnButton(font, Options["Difficulty"][SelectedOptions["Difficulty"]], new Rectangle(503, 84, 130, 32), Color.Black);
+                spriteBatch.DrawString(font, Options["Opponents"][SelectedOptions["Opponents"]], new Vector2(525, 147), Color.Black);
+                spriteBatch.DrawString(font, Options["Land Size"][SelectedOptions["Land Size"]], new Vector2(525, 201), Color.Black);
+                spriteBatch.DrawString(font, Options["Magic"][SelectedOptions["Magic"]], new Vector2(525, 254), Color.Black);
+                spriteBatch.DrawString(font, "Ok", new Vector2(346, 370), Color.Black);
+                spriteBatch.DrawString(font, "Cancel", new Vector2(516, 370), Color.Black);
+                 * */
             }
             catch (Exception ex)
             {
@@ -272,11 +304,6 @@ namespace MOM
                         CurrentScreen = CurrentGameScreen.None;
                         break;
                 }
-
-                //if (!ButtonUp)
-                //{
-                    //Change = true;
-                //}
             }
         }
 

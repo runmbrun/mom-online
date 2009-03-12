@@ -1,5 +1,6 @@
 Content\fonts\Arial.xnb
 Content\fonts\EnglishGothic.xnb
+Content\fonts\ERBukinist.xnb
 Content\bg\bg_options.xnb
 Content\bg\bg_main.xnb
 Content\animations\anim.xnb
