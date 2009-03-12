@@ -1,4 +1,6 @@
-﻿using System;
+﻿
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,6 +8,7 @@ using System.Windows.Forms;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 
 
@@ -14,11 +17,9 @@ namespace MOM
     class ScreenSelectWizard : GameScreen
     {
         // Data
-        //Int32 ButtonPressed = 0;
-
-        // Need to be able to pass this info back to the GameControl object
-        public Dictionary<String, String[]> Options;
-
+        Int32 ButtonPressed = 0;
+        Boolean ButtonDown = false;        
+        ArrayList Wizards;
 
 
         /// <summary>
@@ -61,12 +62,25 @@ namespace MOM
         /// </summary>
         private void FillOutOptions()
         {
-            Options = new Dictionary<String, String[]>();
+            Wizards = new ArrayList();
 
-            Options.Add("Difficulty", new String[] { "Intro", "Easy", "Normal", "Hard", "Impossible" });
-            Options.Add("Opponents", new String[] { "One", "Two", "Three", "Four" });
-            Options.Add("Land Size", new String[] { "Small", "Medium", "Large" });
-            Options.Add("Magic", new String[] { "Weak", "Medium", "Strong" });
+            //Wizards.Add("Blank"); // 0 space
+            Wizards.Add("Merlin");
+            Wizards.Add("Sss'ra");
+            Wizards.Add("Raven");
+            Wizards.Add("Tauron");
+            Wizards.Add("Sharee");
+            Wizards.Add("Freya");
+            Wizards.Add("Lo'Pan");
+            Wizards.Add("Horus");
+            Wizards.Add("Jafar");
+            Wizards.Add("Ariel");
+            Wizards.Add("Oberic");            
+            Wizards.Add("Tlaloc");
+            Wizards.Add("Rjak");
+            Wizards.Add("Kali");
+            Wizards.Add("Blank");
+            Wizards.Add("Custom");
         }
 
         /// <summary>
@@ -86,58 +100,69 @@ namespace MOM
         {
             try
             {
+                // mmb - tyring a new thing here...
+                CurrentMouseState = Mouse.GetState();
+                CheckMouse(CurrentMouseState);
+
                 // draw background first
                 spriteBatch.Begin(SpriteBlendMode.None);
                 spriteBatch.Draw(textureScreen, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
                 spriteBatch.End();
-
-                /*
-                // now draw the buttons
-                Int32 B1x = 0, B2x = 0, B3x = 0, B4x = 0, B5x = 0, B6x = 0;
-
-                if (ButtonPressed > 0)
-                {
-                    switch (ButtonPressed)
-                    {
-                        case 1:
-                            B1x = 15;
-                            break;
-                        case 2:
-                            B2x = 15;
-                            break;
-                        case 3:
-                            B3x = 15;
-                            break;
-                        case 4:
-                            B4x = 15;
-                            break;
-                        case 5:
-                            B5x = 15;
-                            break;
-                        case 6:
-                            B6x = 15;
-                            break;
-                    }
-                }
-
-                // Options Buttons:
+                                
+                // Buttons:
                 // Button Size = 68 x 30.
                 spriteBatch.Begin(SpriteBlendMode.None);
-                // First Button - Difficulty.  251 x 41
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 84, 124, 30), new Rectangle(0, B1x, 68, 15), Color.White);
-                // Second Button - Opponents.  
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 137, 124, 30), new Rectangle(0, B2x, 68, 15), Color.White);
-                // Third Button - Land Size
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 191, 124, 30), new Rectangle(0, B3x, 68, 15), Color.White);
-                // Fourth Button - Magic
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(505, 246, 124, 30), new Rectangle(0, B4x, 68, 15), Color.White);
-                // Fifth Button - Ok
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(344, 360, 124, 30), new Rectangle(0, B5x, 68, 15), Color.White);
-                // Sixth Button - Cancel
-                spriteBatch.Draw(textureOptionsButton, new Rectangle(506, 360, 124, 30), new Rectangle(0, B6x, 68, 15), Color.White);
-                spriteBatch.End();
 
-                // Options Text:
+                Int32 x = 0, y = 0, z = 0, button = 1;
+
+
+                foreach (String Wizard in Wizards)
+                {
+                    // Draw each Button 251 x 41
+
+                    // calculate x
+                    if (button == 1)
+                    {
+                        // start here at the first button
+                        x = 341;
+                        y = 50;
+                        z = 0;
+                    }
+                    else if (button % 2 == 0)
+                    {
+                        // even button - increment x
+                        x += 151;
+                    }
+                    else 
+                    {
+                        // odd button - increment y
+                        y += 44;
+                        x -= 151;
+                    }
+
+                    // calculate z
+                    if (button > 0 && ButtonDown)//button == ButtonPressed)
+                    {
+                        z = 15;
+                        ButtonDown = false;
+                        // go to the next screen
+                        CurrentScreen = CurrentGameScreen.SelectWizardName;
+                    }
+
+                    if (Wizard != "Blank")
+                    {
+                        // draw the button
+                        spriteBatch.Draw(textureButton, new Rectangle(x, y, 136, 30), new Rectangle(0, z, 68, 15), Color.White);
+                    }
+                    
+                    // reset the button up or down var
+                    z = 0;
+                    button++;
+                }
+                spriteBatch.End();   
+                
+                /*
+                // Draw Text:
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, "Difficulty", new Vector2(525, 92), Color.White);
                 spriteBatch.DrawString(font, "Opponents", new Vector2(525, 147), Color.White);
@@ -159,61 +184,92 @@ namespace MOM
         /// </summary>
         /// <param name="Mouse"></param>
         /// <returns></returns>
-        public override void UpdateGame(MouseEventArgs Mouse)
+        public override void UpdateGame(MouseEventArgs MouseArgs)
         {
-            /*
-            // check if a button was pressed
-            if (Mouse.Button == MouseButtons.Left)
+            MouseX = MouseArgs.X;
+            MouseY = MouseArgs.Y;           
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="mouse"></param>
+        public void CheckMouse(MouseState mouse)
+        {
+            //mmb - why can't I make this work?
+            // can't get the relative x in the control... only the entire screen x
+            //Int32 X = mouse.X - Left;
+            //Int32 Y = mouse.Y - Top;
+
+
+            Int32 X = MouseX;
+            Int32 Y = MouseY;
+
+            if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
             {
-                // check x position
-                if (Mouse.X > 344 && Mouse.X < 468)
-                {
-                    if (Mouse.Y > 360 && Mouse.Y < 390)
-                    {
-                        // OK
-                        ButtonPressed = 5;
-                        CurrentScreen = CurrentGameScreen.SelectWizard;
-                    }
-                }
-                else if (Mouse.X > 505 && Mouse.X < 629)
+                // a button was released
+                ButtonDown = false;
+                ButtonPressed = 0;
+            }
+            else if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && ButtonPressed == 0)
+            {
+                // check x position                
+                if (X > 341 && X < 477)
                 {
                     // check the y position now
-                    if (Mouse.Y > 84 && Mouse.Y < 114)
+                    // +30/+46
+                    if (Y > 50 && Y < 80)
                     {
                         ButtonPressed = 1;
                     }
-                    else if (Mouse.Y > 137 && Mouse.Y < 167)
-                    {
-                        ButtonPressed = 2;
-                    }
-                    else if (Mouse.Y > 191 && Mouse.Y < 221)
+                    else if (Y > 126 && Y < 156)
                     {
                         ButtonPressed = 3;
                     }
-                    else if (Mouse.Y > 246 && Mouse.Y < 276)
+                    else if (Y > 191 && Y < 221)
+                    {
+                        ButtonPressed = 5;
+                    }
+                    else if (Y > 267 && Y < 297)
+                    {
+                        ButtonPressed = 7;
+                    }
+                    //else // mmb - this is where a cancel button would go...
+                }
+                else if (X > 491 && X < 627)
+                {
+                    // check the y position now
+                    // +30/+46
+                    // check the y position now
+                    // +30/+46
+                    if (Y > 50 && Y < 80)
+                    {
+                        ButtonPressed = 2;
+                    }
+                    else if (Y > 126 && Y < 156)
                     {
                         ButtonPressed = 4;
                     }
-                    else if (Mouse.Y > 360 && Mouse.Y < 390)
+                    else if (Y > 191 && Y < 221)
                     {
-                        // Cancel
                         ButtonPressed = 6;
-                        CurrentScreen = CurrentGameScreen.None;
                     }
-                    else
+                    else if (Y > 267 && Y < 297)
                     {
-                        ButtonPressed = 0;
+                        ButtonPressed = 8;
+                    }
+                    else if (Y > 343 && Y < 373)
+                    {
+                        // Custom
+                        ButtonPressed = 10;
                     }
                 }
-                else
+
+                if (ButtonPressed > 0)
                 {
-                    ButtonPressed = 0;
+                    ButtonDown = true;
                 }
             }
-            * */
-
-            // now trigger a draw call to update the screen
-            //Draw();             
         }
     }
 }

@@ -14,7 +14,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-//using Microsoft.Xna.Framework.Input; //mmb - where to put this?
 #endregion
 
 
@@ -886,12 +885,7 @@ namespace MOM
             // move tab focus to  the game tab
             tabControl1.SelectTab(tabPageGame); //mmb - temp remove this for debugging
 
-            // start the game!
-            //String DeckName = comboBoxDecks2.SelectedItem.ToString(); //mmb - might need this
-
             //CurrentGame = new Game(this);            
-            //CurrentGame.StartSolitareGame(); //mmb - need this?
-
             gameControl1.StartSolitareGame();
         }
 
@@ -900,37 +894,62 @@ namespace MOM
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void gameControl1_Click(object sender, EventArgs e)
-        {
-            // capture the click
-            //MouseEventArgs mouse = (MouseEventArgs)e;
-
-            // pass the click to the game control object
-            //gameControl1.UpdateGame(mouse);
-        }
-
         private void gameControl1_MouseMove(object sender, MouseEventArgs e)
         {
-            // capture the click
+            // capture the mouse click
             MouseEventArgs mouse = (MouseEventArgs)e;
 
-            // pass the click to the game control object
-            gameControl1.UpdateGame(mouse);  //mmb - when to do this?
-            //gameControl1.Draw();
-            //Update();
-
-            //tabControl1.Update();
-            //gameControl1.Update();
+            // pass the click to the game control object to store for the game to use
+            gameControl1.UpdateGame(mouse);
         }
 
+        #region Unneeded
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gameControl1_Click(object sender, EventArgs e)
+        {
+            // mmb - is this needed anymore?
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gameControl1_MouseClick(object sender, MouseEventArgs e)
         {
+            // mmb - is this needed anymore?
+        }        
 
-        }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void gameControl1_KeyPress(object sender, KeyPressEventArgs e)
         {
+            // mmb - is this needed anymore?
+        }
+        #endregion
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void gameControl1_MouseEnter(object sender, EventArgs e)
+        {
+            // hide the cursor when the mouse enters the gameControl1 area
+            Cursor.Hide();
+        }
+
+        private void gameControl1_MouseLeave(object sender, EventArgs e)
+        {
+            // show the cursor when the mouse exits the gameControl1 area
+            Cursor.Show();
         }
     }
 }

@@ -152,7 +152,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="cursors\hand.bmp">
+    <Compile Include="cursors\hand.png">
       <Name>hand</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
