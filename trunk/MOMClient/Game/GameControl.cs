@@ -236,5 +236,27 @@ namespace MOM
         {
             CurrentScreen = CurrentGameScreen.SelectOptions;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="font"></param>
+        /// <param name="text"></param>
+        /// <param name="location"></param>
+        /// <param name="color"></param>
+        public void DrawTextOnButton(SpriteFont font, String text, Rectangle location, Color color)
+        {
+            // calculate the new vector
+            // Rectangle is the button to put the text on
+            // vector is the point of where to start drawing the text
+            Vector2 Location = new Vector2();
+            float FontHeight = font.LineSpacing;
+            Vector2 test = font.MeasureString(text);
+
+            Location.X = ((location.Width - (test.Length())) / 2) + location.X;
+            Location.Y = ((location.Height - FontHeight) / 2) + location.Y;
+
+            spriteBatch.DrawString(font, text, Location, color);
+        }
     }
 }
