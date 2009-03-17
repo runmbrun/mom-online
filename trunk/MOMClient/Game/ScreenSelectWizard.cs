@@ -18,8 +18,8 @@ namespace MOM
     {
         // Data
         Int32 ButtonPressed = 0;
-        Boolean ButtonDown = false;        
-        ArrayList Wizards;
+        ArrayList Buttons;        
+        
 
 
         /// <summary>
@@ -40,16 +40,15 @@ namespace MOM
         {
             try
             {
-                font = content.Load<SpriteFont>(@"fonts\EnglishGothic");
+                font = content.Load<SpriteFont>(@"fonts\ERBukinist");
 
                 textureScreen = content.Load<Texture2D>(@"bg\bg_wizard");
                 textureButton = content.Load<Texture2D>(@"buttons\wizard");
 
-                // mmb - do we want this in here?
-                // Hook the idle event to constantly redraw our animation.
-                //Application.Idle += delegate { Invalidate(); };
+                CreateButtonData();
 
-                FillOutOptions();
+                ButtonDown = false;
+                FirstDisplay = true;
             }
             catch (Exception ex)
             {
@@ -60,27 +59,102 @@ namespace MOM
         /// <summary>
         /// Fill out all available options for the player
         /// </summary>
-        private void FillOutOptions()
+        private void CreateButtonData()
         {
-            Wizards = new ArrayList();
+            Int32 x = 0, y = 0;
+            Int32 l = 136, w = 30;
+            Boolean Add = true;
+            Buttons = new ArrayList();
 
-            //Wizards.Add("Blank"); // 0 space
-            Wizards.Add("Merlin");
-            Wizards.Add("Sss'ra");
-            Wizards.Add("Raven");
-            Wizards.Add("Tauron");
-            Wizards.Add("Sharee");
-            Wizards.Add("Freya");
-            Wizards.Add("Lo'Pan");
-            Wizards.Add("Horus");
-            Wizards.Add("Jafar");
-            Wizards.Add("Ariel");
-            Wizards.Add("Oberic");            
-            Wizards.Add("Tlaloc");
-            Wizards.Add("Rjak");
-            Wizards.Add("Kali");
-            Wizards.Add("Blank");
-            Wizards.Add("Custom");
+
+            // this screen has 15 buttons
+            for (Int32 i = 1; i <= 16; i++)
+            {
+                // create a new button
+                ButtonInfo bi = new ButtonInfo();
+
+                bi.Number = i;
+
+                if (i == 1)
+                {
+                    x = 340;
+                    y = 50;
+                }
+                else if (i % 2 == 0)
+                {
+                    // even button - increment x
+                    x += 151;
+                }
+                else
+                {
+                    // odd button - increment y
+                    y += 44;
+                    x -= 151;
+                }
+                bi.Location = new Rectangle(x, y, l, w);
+
+                // reset add check
+                Add = true;
+
+
+                // add the button's text
+                switch (i)
+                {
+                    case 1:
+                        bi.Name = "Merlin";
+                        break;
+                    case 2:
+                        bi.Name = "Sss'ra";
+                        break;
+                    case 3:
+                        bi.Name = "Raven";
+                        break;
+                    case 4:
+                        bi.Name = "Tauron";
+                        break;
+                    case 5:
+                        bi.Name = "Sharee";
+                        break;
+                    case 6:
+                        bi.Name = "Freya";
+                        break;
+                    case 7:
+                        bi.Name = "Lo'Pan";
+                        break;
+                    case 8:
+                        bi.Name = "Horus";
+                        break;
+                    case 9:
+                        bi.Name = "Jafar";
+                        break;
+                    case 10:
+                        bi.Name = "Ariel";
+                        break;
+                    case 11:
+                        bi.Name = "Oberic";
+                        break;
+                    case 12:
+                        bi.Name = "Tlaloc";
+                        break;
+                    case 13:
+                        bi.Name = "Rjak";
+                        break;
+                    case 14:
+                        bi.Name = "Kali";
+                        break;
+                    case 16:
+                        bi.Name = "Custom";
+                        break;
+                    default:
+                        Add = false;
+                        break;
+                }
+
+                if (Add)
+                {
+                    Buttons.Add(bi);
+                }
+            }
         }
 
         /// <summary>
@@ -96,82 +170,73 @@ namespace MOM
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Draw this screen
+        /// </summary>
         public override void Draw()
         {
             try
             {
-                // mmb - tyring a new thing here...
+                Boolean ChangeScreens = false;
+
+                if (FirstDisplay)
+                {
+                    ButtonDown = false;
+                    FirstDisplay = false;
+                }
+
+                // check the mouse buttons
                 CurrentMouseState = Mouse.GetState();
                 CheckMouse(CurrentMouseState);
+                OldMouseState = CurrentMouseState;
 
                 // draw background first
                 spriteBatch.Begin(SpriteBlendMode.None);
                 spriteBatch.Draw(textureScreen, new Rectangle(0, 0, ScreenX, ScreenY), Color.White);
                 spriteBatch.End();
                                 
-                // Buttons:
+                // Draw the Buttons:
                 // Button Size = 68 x 30.
                 spriteBatch.Begin(SpriteBlendMode.None);
 
-                Int32 x = 0, y = 0, z = 0, button = 1;
+                Int32 z = 0, button = 1;
 
 
-                foreach (String Wizard in Wizards)
-                {
-                    // Draw each Button 251 x 41
-
-                    // calculate x
-                    if (button == 1)
-                    {
-                        // start here at the first button
-                        x = 341;
-                        y = 50;
-                        z = 0;
-                    }
-                    else if (button % 2 == 0)
-                    {
-                        // even button - increment x
-                        x += 151;
-                    }
-                    else 
-                    {
-                        // odd button - increment y
-                        y += 44;
-                        x -= 151;
-                    }
-
+                foreach (ButtonInfo Wizard in Buttons)
+                {   
                     // calculate z
-                    if (button > 0 && ButtonDown)//button == ButtonPressed)
+                    if (Wizard.Number > 0 && ButtonDown)
                     {
                         z = 15;
+                                                
                         ButtonDown = false;
-                        // go to the next screen
-                        CurrentScreen = CurrentGameScreen.SelectWizardName;
+                        ChangeScreens = true;
                     }
 
-                    if (Wizard != "Blank")
-                    {
-                        // draw the button
-                        spriteBatch.Draw(textureButton, new Rectangle(x, y, 136, 30), new Rectangle(0, z, 68, 15), Color.White);
-                    }
+                    // draw the button
+                    spriteBatch.Draw(textureButton, Wizard.Location, new Rectangle(0, z, 68, 15), Color.White);
                     
                     // reset the button up or down var
                     z = 0;
                     button++;
                 }
-                spriteBatch.End();   
-                
-                /*
+                spriteBatch.End();
+
                 // Draw Text:
                 spriteBatch.Begin();
-                spriteBatch.DrawString(font, "Difficulty", new Vector2(525, 92), Color.White);
-                spriteBatch.DrawString(font, "Opponents", new Vector2(525, 147), Color.White);
-                spriteBatch.DrawString(font, "Land Size", new Vector2(525, 201), Color.White);
-                spriteBatch.DrawString(font, "Magic", new Vector2(525, 254), Color.White);
-                spriteBatch.DrawString(font, "Ok", new Vector2(346, 370), Color.White);
-                spriteBatch.DrawString(font, "Cancel", new Vector2(516, 370), Color.White);
+                foreach (ButtonInfo Wizard in Buttons)
+                {
+                    DrawTextOnButton(font, Wizard.Name, Wizard.Location, Color.Black);
+                }
                 spriteBatch.End();
-                 * */
+
+                if (ChangeScreens)
+                {
+                    // go to the next screen
+                    CurrentScreen = CurrentGameScreen.SelectWizardName;
+                    FirstDisplay = true;
+                    ButtonDown = false;
+                }
             }
             catch (Exception ex)
             {
@@ -191,17 +256,11 @@ namespace MOM
         }
 
         /// <summary>
-        /// 
+        /// Check to see where the mouse on the screen
         /// </summary>
         /// <param name="mouse"></param>
         public void CheckMouse(MouseState mouse)
         {
-            //mmb - why can't I make this work?
-            // can't get the relative x in the control... only the entire screen x
-            //Int32 X = mouse.X - Left;
-            //Int32 Y = mouse.Y - Top;
-
-
             Int32 X = MouseX;
             Int32 Y = MouseY;
 
@@ -213,55 +272,13 @@ namespace MOM
             }
             else if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && ButtonPressed == 0)
             {
-                // check x position                
-                if (X > 341 && X < 477)
+                // the mouse was clicked
+                foreach (ButtonInfo button in Buttons)
                 {
-                    // check the y position now
-                    // +30/+46
-                    if (Y > 50 && Y < 80)
+                    if (X > button.Location.Left && X < button.Location.Right &&
+                        Y > button.Location.Top && Y < button.Location.Bottom)
                     {
-                        ButtonPressed = 1;
-                    }
-                    else if (Y > 126 && Y < 156)
-                    {
-                        ButtonPressed = 3;
-                    }
-                    else if (Y > 191 && Y < 221)
-                    {
-                        ButtonPressed = 5;
-                    }
-                    else if (Y > 267 && Y < 297)
-                    {
-                        ButtonPressed = 7;
-                    }
-                    //else // mmb - this is where a cancel button would go...
-                }
-                else if (X > 491 && X < 627)
-                {
-                    // check the y position now
-                    // +30/+46
-                    // check the y position now
-                    // +30/+46
-                    if (Y > 50 && Y < 80)
-                    {
-                        ButtonPressed = 2;
-                    }
-                    else if (Y > 126 && Y < 156)
-                    {
-                        ButtonPressed = 4;
-                    }
-                    else if (Y > 191 && Y < 221)
-                    {
-                        ButtonPressed = 6;
-                    }
-                    else if (Y > 267 && Y < 297)
-                    {
-                        ButtonPressed = 8;
-                    }
-                    else if (Y > 343 && Y < 373)
-                    {
-                        // Custom
-                        ButtonPressed = 10;
+                        ButtonPressed = button.Number;
                     }
                 }
 

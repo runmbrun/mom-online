@@ -14,7 +14,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MOM
 {
-    class ScreenSelectWizardName : GameScreen
+    class ScreenSelectRace : GameScreen
     {
         // Data
 
@@ -22,7 +22,7 @@ namespace MOM
         /// <summary>
         /// Screen Constructor
         /// </summary>
-        public ScreenSelectWizardName(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
+        public ScreenSelectRace(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
         {
             spriteBatch = BaseSpriteBatch;
             content = BaseContent;
@@ -40,7 +40,7 @@ namespace MOM
                 // load the font data files
                 font = content.Load<SpriteFont>(@"fonts\Arial");
 
-                textureScreen = content.Load<Texture2D>(@"bg\bg_name");
+                textureScreen = content.Load<Texture2D>(@"bg\bg_race");
 
                 ButtonDown = false;
                 FirstDisplay = true;
@@ -74,7 +74,7 @@ namespace MOM
                 Boolean ChangeScreens = false;
 
 
-                // check the mouse buttons                
+                // check the mouse buttons
                 CurrentMouseState = Mouse.GetState();
                 CheckMouse(CurrentMouseState);
                 OldMouseState = CurrentMouseState;
@@ -91,7 +91,7 @@ namespace MOM
                 spriteBatch.End();
 
                 // mmb - temp message
-                const string message = "I'm sorry\nYou can't add your own player name at this time.\nPlease click mouse to continue...\n";
+                const string message = "I'm sorry\nYou can't choose your own player race at this time.\nPlease click mouse to continue...\n";
                 spriteBatch.Begin();
                 spriteBatch.DrawString(font, message, new Vector2(23, 23), Color.White);
                 spriteBatch.End();
@@ -104,7 +104,7 @@ namespace MOM
                 if (ChangeScreens)
                 {
                     // move to next screen
-                    CurrentScreen = CurrentGameScreen.SelectRace;
+                    CurrentScreen = CurrentGameScreen.SelectBanner;
                     FirstDisplay = true;
                     ButtonDown = false;
                 }
@@ -138,10 +138,10 @@ namespace MOM
             }
             else if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !FirstDisplay &&
                 OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-            {   
+            {
                 // left mouse button was just clicked
                 ButtonDown = true;
-            }            
+            }
         }
     }
 }

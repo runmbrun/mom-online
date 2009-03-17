@@ -49,7 +49,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Game\ButtonInfo.cs" />
     <Compile Include="Game\GameControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Game\ScreenSelectBanner.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Game\ScreenSelectOptions.cs">
@@ -62,6 +66,9 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Game\GraphicsDeviceService.cs" />
+    <Compile Include="Game\ScreenSelectRace.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Game\ScreenSelectWizard.cs">
       <SubType>Component</SubType>
     </Compile>

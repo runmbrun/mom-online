@@ -40,6 +40,8 @@ namespace MOM
         ScreenSelectOptions screenSelectOptions;
         ScreenSelectWizard screenSelectWizard;
         ScreenSelectWizardName screenSelectWizardName;
+        ScreenSelectRace screenSelectRace;
+        ScreenSelectBanner screenSelectBanner;
         
 
         // Screen Info
@@ -65,10 +67,12 @@ namespace MOM
         // Keep track of the current Screen for the game
         public static CurrentGameScreen CurrentScreen = CurrentGameScreen.None;
 
-        // Game Data
-        // mmb - todo
-         public MOMGame game = new MOMGame();
-         public MouseState CurrentMouseState;
+        // Game Data        
+        public MOMGame game = new MOMGame();  // mmb - todo
+        public Boolean FirstDisplay;
+        public Boolean ButtonDown = false;
+        public MouseState CurrentMouseState;
+        public MouseState OldMouseState;
 
         // Animations
         Stopwatch GameTimer;
@@ -103,9 +107,12 @@ namespace MOM
 
                 // load the screen classes
                 // mmb - now or when needed?
+                // can load these into a ArrayList too...
                 screenSelectOptions = new ScreenSelectOptions(content, spriteBatch);
                 screenSelectWizard = new ScreenSelectWizard(content, spriteBatch);
                 screenSelectWizardName = new ScreenSelectWizardName(content, spriteBatch);
+                screenSelectRace = new ScreenSelectRace(content, spriteBatch);
+                screenSelectBanner = new ScreenSelectBanner(content, spriteBatch);
 
                 // Start the animation timer.
                 GameTimer = Stopwatch.StartNew();
@@ -162,6 +169,14 @@ namespace MOM
                 else if (CurrentScreen == CurrentGameScreen.SelectWizardName)
                 {
                     screenSelectWizardName.Draw();
+                }
+                else if (CurrentScreen == CurrentGameScreen.SelectRace)
+                {
+                    screenSelectRace.Draw();
+                }
+                else if (CurrentScreen == CurrentGameScreen.SelectBanner)
+                {
+                    screenSelectBanner.Draw();
                 }
                 else
                 {
@@ -226,6 +241,14 @@ namespace MOM
             else if (CurrentScreen == CurrentGameScreen.SelectWizardName)
             {
                 screenSelectWizardName.UpdateGame(MouseArgs);
+            }
+            else if (CurrentScreen == CurrentGameScreen.SelectRace)
+            {
+                screenSelectRace.UpdateGame(MouseArgs);
+            }
+            else if (CurrentScreen == CurrentGameScreen.SelectBanner)
+            {
+                screenSelectBanner.UpdateGame(MouseArgs);
             }
         }
 
