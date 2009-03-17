@@ -14,15 +14,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace MOM
 {
-    class ScreenSelectWizardName : GameScreen
+    class ScreenSelectBanner : GameScreen
     {
         // Data
-
+        
 
         /// <summary>
         /// Screen Constructor
         /// </summary>
-        public ScreenSelectWizardName(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
+        public ScreenSelectBanner(ContentManager BaseContent, SpriteBatch BaseSpriteBatch)
         {
             spriteBatch = BaseSpriteBatch;
             content = BaseContent;
@@ -40,7 +40,7 @@ namespace MOM
                 // load the font data files
                 font = content.Load<SpriteFont>(@"fonts\Arial");
 
-                textureScreen = content.Load<Texture2D>(@"bg\bg_name");
+                textureScreen = content.Load<Texture2D>(@"bg\bg_banner");
 
                 ButtonDown = false;
                 FirstDisplay = true;
@@ -104,7 +104,7 @@ namespace MOM
                 if (ChangeScreens)
                 {
                     // move to next screen
-                    CurrentScreen = CurrentGameScreen.SelectRace;
+                    CurrentScreen = CurrentGameScreen.Game;
                     FirstDisplay = true;
                     ButtonDown = false;
                 }
@@ -136,12 +136,13 @@ namespace MOM
             {
                 ButtonDown = false;
             }
-            else if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !FirstDisplay &&
+            else if (mouse.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Pressed && !FirstDisplay && 
                 OldMouseState.LeftButton == Microsoft.Xna.Framework.Input.ButtonState.Released)
-            {   
+            {
                 // left mouse button was just clicked
                 ButtonDown = true;
-            }            
+            }
+
         }
     }
 }

@@ -48,15 +48,10 @@ namespace MOM
                 textureScreen = content.Load<Texture2D>(@"bg\bg_options");
                 textureButton = content.Load<Texture2D>(@"buttons\blank");
 
-                // mmb - do we want this in here?
-                // Hook the idle event to constantly redraw our animation.
-                //Application.Idle += delegate { Invalidate(); };
-                                
-                FillOutOptions();
+                CreateButtonData();
 
-                // mmb - this doesn't seem to work... maybe save value as a member var
-                CurrentMouseState = new MouseState();
-                Mouse.WindowHandle = this.Handle;
+                ButtonDown = false;
+                FirstDisplay = true;
             }
             catch (Exception ex)
             {
@@ -67,7 +62,7 @@ namespace MOM
         /// <summary>
         /// Fill out all available options for the player
         /// </summary>
-        private void FillOutOptions()
+        private void CreateButtonData()
         {
             Options = new Dictionary<String, String[]>();
             Options.Add("Difficulty", new String[] { "Intro", "Easy", "Normal", "Hard", "Impossible" });
@@ -209,14 +204,6 @@ namespace MOM
                 DrawTextOnButton(font, "Ok", new Rectangle(342, 360, 130, 32), Color.Black);
                 DrawTextOnButton(font, "Cancel", new Rectangle(503, 360, 130, 32), Color.Black);
                 spriteBatch.End();
-                /*
-                DrawTextOnButton(font, Options["Difficulty"][SelectedOptions["Difficulty"]], new Rectangle(503, 84, 130, 32), Color.Black);
-                spriteBatch.DrawString(font, Options["Opponents"][SelectedOptions["Opponents"]], new Vector2(525, 147), Color.Black);
-                spriteBatch.DrawString(font, Options["Land Size"][SelectedOptions["Land Size"]], new Vector2(525, 201), Color.Black);
-                spriteBatch.DrawString(font, Options["Magic"][SelectedOptions["Magic"]], new Vector2(525, 254), Color.Black);
-                spriteBatch.DrawString(font, "Ok", new Vector2(346, 370), Color.Black);
-                spriteBatch.DrawString(font, "Cancel", new Vector2(516, 370), Color.Black);
-                 * */
             }
             catch (Exception ex)
             {
