@@ -13,3 +13,17 @@ Content\bg\bg_name.xnb
 Content\bg\bg_race.xnb
 Content\bg\bg_wizard.xnb
 Content\cursors\hand.xnb
+Content\images\portraits\wizard01.xnb
+Content\images\portraits\wizard02.xnb
+Content\images\portraits\wizard03.xnb
+Content\images\portraits\wizard04.xnb
+Content\images\portraits\wizard05.xnb
+Content\images\portraits\wizard06.xnb
+Content\images\portraits\wizard07.xnb
+Content\images\portraits\wizard08.xnb
+Content\images\portraits\wizard09.xnb
+Content\images\portraits\wizard10.xnb
+Content\images\portraits\wizard11.xnb
+Content\images\portraits\wizard12.xnb
+Content\images\portraits\wizard13.xnb
+Content\images\portraits\wizard14.xnb

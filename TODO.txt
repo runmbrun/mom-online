@@ -19,6 +19,11 @@ Done - Need to be able to refresh the screen all the time
 
 Client - Windows Form
 =====================
+- Display Player's stats when logged in.
+- Display errors that help the player to understand what is wrong.
+- Lobby needs to be redone.  Single player vs Multi player.
+- Create game for multi, and then allow other players to join it, or invite other players to game.
+- Then start when all player slots have been filled.
 - 
 
 
@@ -26,12 +31,19 @@ Client - Windows Form
 Client - XNA Game
 =================
 - Convert Content data from bmp to png.  Could save a lot of space... 188k to 27k.
+- Convert Content data from 320x200 to 640x400 sizes.  Might speed up game, but will increase space needed.
+- Screen - Select Wizard - Mouse Over buttons displays that character in portrait location.
+- Screen - Select Banner - Need to be able to display the "Building World Maps..." box
+- screen - Game - Need to create a map that is different every time.
+- screen - Game - Name the starting city - not important at the beginning.
+- screen - Game - Game Map details... left clicks, right clicks.
 - 
 
 
 
 Server
 ======
+- Save the game board in the database.
 - 
 
 
